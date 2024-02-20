@@ -256,13 +256,7 @@ public class RenderSectionManager {
         ChunkSection section = chunk.getSectionArray()[this.world.sectionCoordToIndex(y)];
 
         boolean isEmpty;
-        if (!section.isEmpty()) {
-            isEmpty = false;
-        } else if (!SodiumClientMod.immersiveLoaded) {
-            isEmpty = true;
-        } else {
-            isEmpty = !ImmersiveEmptyChunkChecker.hasWires(ChunkSectionPos.from(x, y, z));
-        }
+        isEmpty = section.isEmpty();
         if (isEmpty) {
             render.setData(ChunkRenderData.EMPTY);
         } else {

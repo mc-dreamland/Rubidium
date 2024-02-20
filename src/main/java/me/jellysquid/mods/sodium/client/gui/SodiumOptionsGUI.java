@@ -85,7 +85,7 @@ public class SodiumOptionsGUI extends Screen {
 
         this.undoButton = new FlatButtonWidget(new Dim2i(this.width - 211, this.height - 30, 65, 20), new TranslatableText("sodium.options.buttons.undo"), this::undoChanges);
         this.applyButton = new FlatButtonWidget(new Dim2i(this.width - 142, this.height - 30, 65, 20), new TranslatableText("sodium.options.buttons.apply"), this::applyChanges);
-        this.closeButton = new FlatButtonWidget(new Dim2i(this.width - 73, this.height - 30, 65, 20), new TranslatableText("gui.done"), this::close);
+        this.closeButton = new FlatButtonWidget(new Dim2i(this.width - 73, this.height - 30, 65, 20), new TranslatableText("gui.done"), this::onClose);
         Text donateToJelly = new TranslatableText("sodium.options.buttons.donate");
         int width = 12 + this.textRenderer.getWidth(donateToJelly);
         this.donateButton = new FlatButtonWidget(new Dim2i(this.width - width - 32, 6, width, 20), donateToJelly, this::openDonationPage);
@@ -302,7 +302,7 @@ public class SodiumOptionsGUI extends Screen {
     }
 
     @Override
-    public void close() {
+    public void onClose() {
         this.client.setScreen(this.prevScreen);
     }
 }

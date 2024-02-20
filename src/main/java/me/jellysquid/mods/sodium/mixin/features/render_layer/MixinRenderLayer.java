@@ -14,6 +14,10 @@ public class MixinRenderLayer {
 
     private static final List<RenderLayer> layers =  ImmutableList.of(getSolid(), getCutoutMipped(), getCutout(), getTranslucent(), getTripwire());;
 
+    /**
+     * @author
+     * @reason
+     */
     @Overwrite
     public static List<RenderLayer> getBlockLayers() {
         return layers;

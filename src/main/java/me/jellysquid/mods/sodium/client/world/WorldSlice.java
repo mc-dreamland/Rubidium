@@ -14,7 +14,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.util.collection.PackedIntegerArray;
 import net.minecraft.util.math.*;
-import net.minecraft.util.registry.RegistryEntry;
 import net.minecraft.world.BlockRenderView;
 import net.minecraft.world.LightType;
 import net.minecraft.world.World;
@@ -78,7 +77,7 @@ public class WorldSlice implements BlockRenderView {
     private final BlockState[][] blockStatesArrays;
 
     // Local Section->Biome table.
-    private final RegistryEntry<Biome>[][] biomeArrays;
+    private final Biome[][] biomeArrays;
 
     // Local section copies. Read-only.
     private ClonedChunkSection[] sections;
@@ -100,9 +99,6 @@ public class WorldSlice implements BlockRenderView {
         // section to render, so we need to signal that a chunk render task shouldn't created. This saves a considerable
         // amount of time in queueing instant build tasks and greatly accelerates how quickly the world can be loaded.
         boolean isEmpty = section == null || section.isEmpty();
-        if (isEmpty && SodiumClientMod.immersiveLoaded) {
-            isEmpty = !ImmersiveEmptyChunkChecker.hasWires(origin);
-        }
         if (isEmpty) {
             return null;
         }
@@ -144,7 +140,7 @@ public class WorldSlice implements BlockRenderView {
 
         this.sections = new ClonedChunkSection[SECTION_TABLE_ARRAY_SIZE];
         this.blockStatesArrays = new BlockState[SECTION_TABLE_ARRAY_SIZE][SECTION_BLOCK_COUNT];
-        this.biomeArrays = new RegistryEntry[SECTION_TABLE_ARRAY_SIZE][SECTION_BIOME_COUNT];
+        this.biomeArrays = new Biome[SECTION_TABLE_ARRAY_SIZE][SECTION_BIOME_COUNT];
 
     }
 
@@ -209,7 +205,7 @@ public class WorldSlice implements BlockRenderView {
                 .copyUsingPalette(states, section.getBlockPalette());
     }
 
-    private void unpackBiomeData(RegistryEntry<Biome>[] biomes, ClonedChunkSection section) {
+    private void unpackBiomeData(Biome[] biomes, ClonedChunkSection section) {
         for (int x = 0; x < 4; x++) {
             for (int y = 0; y < 4; y++) {
                 for (int z = 0; z < 4; z++) {
@@ -293,7 +289,7 @@ public class WorldSlice implements BlockRenderView {
     }
 
     // Coordinates are in biome space!
-    private RegistryEntry<Biome> getStoredBiome(int biomeX, int biomeY, int biomeZ) {
+    private Biome getStoredBiome(int biomeX, int biomeY, int biomeZ) {
         int chunkX = (BiomeCoords.toBlock(biomeX) - this.baseX) >> 4;
         int chunkY = (BiomeCoords.toBlock(biomeY) - this.baseY) >> 4;
         int chunkZ = (BiomeCoords.toBlock(biomeZ) - this.baseZ) >> 4;

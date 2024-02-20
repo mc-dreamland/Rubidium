@@ -103,7 +103,7 @@ public abstract class MixinWorldRenderer implements WorldRendererExtended {
      * @author JellySquid
      */
     @Overwrite
-    public void renderLayer(RenderLayer renderLayer, MatrixStack matrices, double x, double y, double z, Matrix4f matrix) {
+    private void renderLayer(RenderLayer renderLayer, MatrixStack matrices, double x, double y, double z, Matrix4f matrix) {
         RenderDevice.enterManagedCode();
 
         try {
@@ -111,11 +111,11 @@ public abstract class MixinWorldRenderer implements WorldRendererExtended {
         } finally {
             RenderDevice.exitManagedCode();
         }
-        Frustum frustrum = this.capturedFrustum != null ? this.capturedFrustum : this.frustum;
-        Camera camera = this.client.gameRenderer.getCamera();
-        ForgeHooksClient.dispatchRenderStage(
-                renderLayer, (WorldRenderer) (Object) this, matrices, matrix, this.ticks, camera, frustrum
-        );
+//        Frustum frustrum = this.capturedFrustum != null ? this.capturedFrustum : this.frustum;
+//        Camera camera = this.client.gameRenderer.getCamera();
+//        ForgeHooksClient.dispatchRenderStage(
+//                renderLayer, (WorldRenderer) (Object) this, matrices, matrix, this.ticks, camera, frustrum
+//        );
     }
 
     /**
@@ -169,14 +169,6 @@ public abstract class MixinWorldRenderer implements WorldRendererExtended {
         this.renderer.scheduleRebuildForChunk(x, y, z, important);
     }
 
-    /**
-     * @reason Redirect chunk updates to our renderer
-     * @author JellySquid
-     */
-    @Overwrite
-    public boolean isRenderingReady(BlockPos pos) {
-        return this.renderer.doesChunkHaveFlag(pos.getX() >> 4, pos.getZ() >> 4, ChunkStatus.FLAG_ALL);
-    }
     
     @Inject(method = "reload()V", at = @At("RETURN"))
     private void onReload(CallbackInfo ci) {

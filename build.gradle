@@ -43,10 +43,6 @@ dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 	forge "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
-	
-	modCompileOnly "blusunrize.immersiveengineering:ImmersiveEngineering:1.18.2-8.0.2-149"
-	modCompileOnly "codechicken:CodeChickenLib:1.18.2-4.1.4.488:universal"
-	modCompileOnly "team.chisel.ctm:CTM:1.18.2-1.1.5+5"
 }
 
 processResources {

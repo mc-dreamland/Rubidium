@@ -17,6 +17,6 @@ public class MixinClientWorld {
     private Vec3d redirectSampleColor(Vec3d pos, CubicSampler.RgbFetcher rgbFetcher) {
         World world = (World) (Object) this;
 
-        return FastCubicSampler.sampleColor(pos, (x, y, z) -> world.getBiomeForNoiseGen(x, y, z).value().getSkyColor(), Function.identity());
+        return FastCubicSampler.sampleColor(pos, (x, y, z) -> world.getBiomeForNoiseGen(x, y, z).getSkyColor(), Function.identity());
     }
 }

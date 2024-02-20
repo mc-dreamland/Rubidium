@@ -1,24 +1,17 @@
 package me.jellysquid.mods.sodium.client;
 
-import me.jellysquid.mods.sodium.client.compat.ccl.CCLCompat;
-import me.jellysquid.mods.sodium.client.compat.immersive.ImmersiveConnectionRenderer;
 import me.jellysquid.mods.sodium.client.gui.SodiumGameOptions;
-import net.minecraftforge.client.event.RegisterClientReloadListenersEvent;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.fml.IExtensionPoint;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.loading.FMLLoader;
 import net.minecraftforge.network.NetworkConstants;
-
-import java.io.IOException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
 
 @Mod(SodiumClientMod.MODID)
 public class SodiumClientMod {
@@ -29,12 +22,8 @@ public class SodiumClientMod {
 
     private static String MOD_VERSION;
     
-    public static boolean immersiveLoaded = FMLLoader.getLoadingModList().getModFileById("immersiveengineering") != null;
-    public static boolean cclLoaded = FMLLoader.getLoadingModList().getModFileById("codechickenlib") != null;
-    
     public SodiumClientMod() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-        MinecraftForge.EVENT_BUS.addListener(this::registerReloadListener);
         MOD_VERSION = ModList.get().getModContainerById(MODID).get().getModInfo().getVersion().toString();
 
         ModLoadingContext.get().registerExtensionPoint(IExtensionPoint.DisplayTest.class, () -> new IExtensionPoint.DisplayTest(() -> NetworkConstants.IGNORESERVERONLY, (a, b) -> true));
@@ -43,14 +32,6 @@ public class SodiumClientMod {
     public void setup(final FMLClientSetupEvent event) {
         CONFIG = loadConfig();
 
-        if(cclLoaded) {
-            CCLCompat.init();
-        }
-    }
-    
-    public void registerReloadListener(RegisterClientReloadListenersEvent ev) {
-    	if(immersiveLoaded)
-    		ev.registerReloadListener(new ImmersiveConnectionRenderer());
     }
 
     public static SodiumGameOptions options() {

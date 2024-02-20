@@ -46,7 +46,6 @@ public abstract class ChunkShaderFogComponent {
         @Override
         public void setup() {
             this.uFogColor.set(RenderSystem.getShaderFogColor());
-            this.uFogShape.set(RenderSystem.getShaderFogShape().getId());
 
             this.uFogStart.setFloat(RenderSystem.getShaderFogStart());
             this.uFogEnd.setFloat(RenderSystem.getShaderFogEnd());
